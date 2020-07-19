@@ -6,7 +6,7 @@ export class Menu {
   private rootElement: Element;
   currentPlayer: string;
 
-  constructor(private parentElement: Element, private game: Game) {
+  constructor(private parentElement: HTMLElement, private game: Game) {
     this.rootElement = document.createElement('div');
     this.currentPlayer = '';
   }

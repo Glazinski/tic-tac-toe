@@ -2,7 +2,7 @@ import { Score } from './types/Score';
 import { Board } from './types';
 import { Players } from './types';
 
-interface GameBtn extends EventTarget {
+interface GameBtn extends HTMLElement {
   dataset: DOMStringMap;
 }
 
@@ -11,7 +11,7 @@ export class Game {
   players: Players;
   currentPlayer: string;
 
-  constructor(private parentElement: Element, private board: Board) {
+  constructor(private board: Board) {
     this.score = {
       x: 0,
       o: 0,
@@ -23,17 +23,46 @@ export class Game {
     this.currentPlayer = '';
   }
 
+  get gameBoard() {
+    return this.board.gameBoard;
+  }
+
   switchPlayer = (): void => {
     this.currentPlayer = this.currentPlayer === 'x' ? 'o' : 'x';
   };
 
-  isGameWin = (): void => {};
+  isGameWon = (row: number, col: number): boolean => {
+    if (
+      // Horizontal win
+      (this.gameBoard[row][0] === this.currentPlayer &&
+        this.gameBoard[row][1] === this.currentPlayer &&
+        this.gameBoard[row][2] === this.currentPlayer) ||
+      // Vertical win
+      (this.gameBoard[0][col] === this.currentPlayer &&
+        this.gameBoard[1][col] === this.currentPlayer &&
+        this.gameBoard[2][col] === this.currentPlayer) ||
+      // Diagonal win
+      (this.gameBoard[0][0] === this.currentPlayer &&
+        this.gameBoard[1][1] === this.currentPlayer &&
+        this.gameBoard[2][2] === this.currentPlayer) ||
+      (this.gameBoard[2][0] === this.currentPlayer &&
+        this.gameBoard[1][1] === this.currentPlayer &&
+        this.gameBoard[0][2] === this.currentPlayer)
+    )
+      return true;
+    return false;
+  };
 
   onButtonClick = (event: Event): void => {
-    const { id } = (<GameBtn>event.currentTarget).dataset;
-    const gameBtn = <Element>document.querySelector(`.game-btn-${id}`);
-    gameBtn.innerHTML = this.players[this.currentPlayer];
-    gameBtn.classList.add('unclickable');
+    const el = <GameBtn>event.currentTarget;
+    const { col } = el.dataset;
+    const { row } = (<GameBtn>el.parentNode).dataset;
+    let c = +col!;
+    let r = +row!;
+    el.innerHTML = this.players[this.currentPlayer];
+    el.classList.add('unclickable');
+    this.gameBoard[r][c] = this.currentPlayer;
+    console.log(this.isGameWon(r, c));
     this.switchPlayer();
   };
 

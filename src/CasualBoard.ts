@@ -1,9 +1,16 @@
-export class CasualBoard {
-  private rootElement: Element;
-  board: string[][] = [];
+import { Board } from './types';
 
-  constructor(private parentElement: Element) {
+export class CasualBoard implements Board {
+  private rootElement: HTMLElement;
+  gameBoard: string[][];
+
+  constructor(private parentElement: HTMLElement) {
     this.rootElement = document.createElement('div');
+    this.gameBoard = [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+    ];
   }
 
   generateBoard = (callback: (event: Event) => void): void => {
@@ -12,8 +19,15 @@ export class CasualBoard {
 
     let html = '';
 
-    for (let i = 0; i < 9; i++) {
-      html += `<button class="game-btn game-btn-${i}" data-id="${i}"></button>`;
+    for (let i = 0; i < 3; i++) {
+      // html += `<button class="game-btn game-btn-${i}" data-id="${i}"></button>`;
+      html += `
+        <div class="row" data-row="${i}">
+          <button class="game-btn game-btn-${i}" data-col="0"></button>
+          <button class="game-btn game-btn-${i}" data-col="1"></button>
+          <button class="game-btn game-btn-${i}" data-col="2"></button>
+        </div>
+      `;
     }
 
     this.rootElement.innerHTML = html;

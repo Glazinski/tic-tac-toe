@@ -4,6 +4,6 @@ import { CasualBoard } from './CasualBoard';
 
 const app = document.getElementById('root')!;
 
-const game = new Game(app, new CasualBoard(app));
+const game = new Game(new CasualBoard(app));
 const menu = new Menu(app, game);
 menu.show();

@@ -46,8 +46,10 @@ html {
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+}
+
+.row {
+  display: flex;
 }
 
 @keyframes appear {
@@ -84,10 +86,10 @@ html {
   background-color: transparent;
   border: none;
   outline: none;
-  /* border: 3px solid var(--font-color); */
+  border: 3px solid var(--font-color);
 }
 
-/* .game-btn::before {
+.game-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -98,17 +100,17 @@ html {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease-in-out;
-} */
+}
 
 .game-btn:hover {
   cursor: pointer;
 }
 
-/* .game-btn:hover::before {
+.game-btn:hover::before {
   opacity: 0.3;
-} */
+}
 
-.game-btn:nth-child(1),
+/* .game-btn:nth-child(1),
 .game-btn:nth-child(4) {
   border-right: 3px solid var(--font-color);
   border-bottom: 3px solid var(--font-color);
@@ -130,4 +132,4 @@ html {
 }
 .game-btn:nth-child(9) {
   border-left: 3px solid var(--font-color);
-}
+} */
