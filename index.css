@@ -1,1 +1,133 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
+:root {
+  --bg-color: #333;
+  --font-color: #fff;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  font-size: 62.5%;
+  font-family: monospace;
+  color: var(--font-color);
+  background-color: var(--bg-color);
+}
+
+#root {
+  font-size: 1.6rem;
+}
+
+.unclickable {
+  pointer-events: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.menu {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 5rem;
+  border-radius: 0.8rem;
+  border: 1px solid var(--font-color);
+}
+
+.board {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@keyframes appear {
+  0% {
+    transform: scale(0.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.icon {
+  font-size: 9rem;
+  color: var(--font-color);
+  animation: appear ease-in-out 0.2s 1;
+}
+
+.menu-btn {
+  background-color: transparent;
+  border: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+.menu-btn:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.game-btn {
+  position: relative;
+  width: 14rem;
+  height: 14rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  /* border: 3px solid var(--font-color); */
+}
+
+/* .game-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(207, 207, 207);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+} */
+
+.game-btn:hover {
+  cursor: pointer;
+}
+
+/* .game-btn:hover::before {
+  opacity: 0.3;
+} */
+
+.game-btn:nth-child(1),
+.game-btn:nth-child(4) {
+  border-right: 3px solid var(--font-color);
+  border-bottom: 3px solid var(--font-color);
+}
+
+.game-btn:nth-child(2),
+.game-btn:nth-child(5) {
+  border-bottom: 3px solid var(--font-color);
+}
+
+.game-btn:nth-child(3),
+.game-btn:nth-child(6) {
+  border-left: 3px solid var(--font-color);
+  border-bottom: 3px solid var(--font-color);
+}
+
+.game-btn:nth-child(7) {
+  border-right: 3px solid var(--font-color);
+}
+.game-btn:nth-child(9) {
+  border-left: 3px solid var(--font-color);
+}

@@ -117,9 +117,178 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/index.ts":[function(require,module,exports) {
-console.log('hello');
-},{}],"../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+})({"src/Menu.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Menu = void 0;
+
+var Menu =
+/** @class */
+function () {
+  function Menu(parentElement, game) {
+    var _this = this;
+
+    this.parentElement = parentElement;
+    this.game = game;
+
+    this.onButtonClick = function (event) {
+      var team = event.currentTarget.dataset.team;
+      _this.currentPlayer = team;
+
+      _this.hide();
+    };
+
+    this.hide = function () {
+      _this.rootElement.classList.add('hidden'); // This function takes as an argument
+      // choosed team and starts game
+
+
+      _this.game.startGame(_this.currentPlayer);
+    };
+
+    this.show = function () {
+      // this.game.startGame('x');
+      _this.rootElement.classList.add('menu');
+
+      _this.parentElement.appendChild(_this.rootElement);
+
+      var html = "\n      <h1>Play as</h1>\n      <div>\n        <button class=\"menu-btn circle-btn\" data-team=\"o\">\n          <i class=\"icon far fa-circle\"></i>\n        </button>\n        <button class=\"menu-btn cross-btn\" data-team=\"x\">\n          <i class=\"icon fas fa-times\"></i>\n        </button>\n      </div>\n    ";
+      _this.rootElement.innerHTML = html;
+      _this.circleBtn = document.querySelector('.circle-btn');
+      _this.crossBtn = document.querySelector('.cross-btn');
+
+      _this.circleBtn.addEventListener('click', _this.onButtonClick);
+
+      _this.crossBtn.addEventListener('click', _this.onButtonClick);
+    };
+
+    this.rootElement = document.createElement('div');
+    this.currentPlayer = '';
+  }
+
+  return Menu;
+}();
+
+exports.Menu = Menu;
+},{}],"src/Game.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Game = void 0;
+
+var Game =
+/** @class */
+function () {
+  function Game(parentElement, board) {
+    var _this = this;
+
+    this.parentElement = parentElement;
+    this.board = board;
+
+    this.switchPlayer = function () {
+      _this.currentPlayer = _this.currentPlayer === 'x' ? 'o' : 'x';
+    };
+
+    this.isGameWin = function () {};
+
+    this.onButtonClick = function (event) {
+      var id = event.currentTarget.dataset.id;
+      var gameBtn = document.querySelector(".game-btn-" + id);
+      gameBtn.innerHTML = _this.players[_this.currentPlayer];
+      gameBtn.classList.add('unclickable');
+
+      _this.switchPlayer();
+    };
+
+    this.startGame = function (currPlayer) {
+      _this.currentPlayer = currPlayer;
+      window.addEventListener('click', function () {
+        console.log(_this);
+      });
+
+      _this.board.generateBoard(_this.onButtonClick);
+    };
+
+    this.score = {
+      x: 0,
+      o: 0
+    };
+    this.players = {
+      x: '<i class="icon fas fa-times"></i>',
+      o: '<i class="icon far fa-circle"></i>'
+    };
+    this.currentPlayer = '';
+  }
+
+  return Game;
+}();
+
+exports.Game = Game;
+},{}],"src/CasualBoard.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CasualBoard = void 0;
+
+var CasualBoard =
+/** @class */
+function () {
+  function CasualBoard(parentElement) {
+    var _this = this;
+
+    this.parentElement = parentElement;
+    this.board = [];
+
+    this.generateBoard = function (callback) {
+      _this.rootElement.classList.add('board');
+
+      _this.parentElement.appendChild(_this.rootElement);
+
+      var html = '';
+
+      for (var i = 0; i < 9; i++) {
+        html += "<button class=\"game-btn game-btn-" + i + "\" data-id=\"" + i + "\"></button>";
+      }
+
+      _this.rootElement.innerHTML = html;
+      var buttons = document.querySelectorAll('.game-btn');
+      buttons.forEach(function (divEl) {
+        divEl.addEventListener('click', callback);
+      });
+    };
+
+    this.rootElement = document.createElement('div');
+  }
+
+  return CasualBoard;
+}();
+
+exports.CasualBoard = CasualBoard;
+},{}],"src/index.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var Menu_1 = require("./Menu");
+
+var Game_1 = require("./Game");
+
+var CasualBoard_1 = require("./CasualBoard");
+
+var app = document.getElementById('root');
+var game = new Game_1.Game(app, new CasualBoard_1.CasualBoard(app));
+var menu = new Menu_1.Menu(app, game);
+menu.show();
+},{"./Menu":"src/Menu.ts","./Game":"src/Game.ts","./CasualBoard":"src/CasualBoard.ts"}],"../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
