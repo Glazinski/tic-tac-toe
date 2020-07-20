@@ -1,13 +1,15 @@
 import { Game } from './Game';
+import { DOMHelpers } from './DOMHelpers';
 
-export class Menu {
-  private circleBtn!: Element;
-  private crossBtn!: Element;
-  private rootElement: Element;
-  currentPlayer: string;
+export class Menu extends DOMHelpers {
+  private circleBtn!: HTMLElement;
+  private crossBtn!: HTMLElement;
+  private rootElement: HTMLElement;
+  private currentPlayer: string;
 
   constructor(private parentElement: HTMLElement, private game: Game) {
-    this.rootElement = document.createElement('div');
+    super();
+    this.rootElement = this.createElement('div', 'menu');
     this.currentPlayer = '';
   }
 
@@ -28,16 +30,15 @@ export class Menu {
 
   show = (): void => {
     // this.game.startGame('x');
-    this.rootElement.classList.add('menu');
     this.parentElement.appendChild(this.rootElement);
 
     const html = `
       <h1>Play as</h1>
       <div>
-        <button class="menu-btn circle-btn" data-team="o">
+        <button class="menu--btn circle-btn" data-team="o">
           <i class="icon far fa-circle"></i>
         </button>
-        <button class="menu-btn cross-btn" data-team="x">
+        <button class="menu--btn cross-btn" data-team="x">
           <i class="icon fas fa-times"></i>
         </button>
       </div>
@@ -45,8 +46,10 @@ export class Menu {
 
     this.rootElement.innerHTML = html;
 
-    this.circleBtn = <Element>document.querySelector('.circle-btn');
-    this.crossBtn = <Element>document.querySelector('.cross-btn');
+    this.circleBtn = this.getElement('.circle-btn');
+    this.crossBtn = this.getElement('.cross-btn');
+    // this.circleBtn = <Element>document.querySelector('.circle-btn');
+    // this.crossBtn = <Element>document.querySelector('.cross-btn');
 
     this.circleBtn.addEventListener('click', this.onButtonClick);
     this.crossBtn.addEventListener('click', this.onButtonClick);
