@@ -8,18 +8,37 @@
   --bg-color: #333;
   --font-color: #fff;
   --cross-color: #c49b33;
+  --border: 1.5px solid #fff;
 }
 
 html {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 100%; */
   font-size: 62.5%;
   font-family: monospace;
   color: var(--font-color);
   background-color: var(--bg-color);
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  /* height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+  /* font-size: 62.5%;
+  font-family: monospace;
+  color: var(--font-color);
+  background-color: var(--bg-color); */
 }
 
 #root {
@@ -31,16 +50,34 @@ html {
   margin-bottom: 10rem;
 }
 
+.board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 430px;
+  height: 430px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: red;
+  height: 16px;
+  width: 400px;
+  z-index: 10;
+  opacity: 0.5;
+  border-radius: 50px;
+}
+
 .unclickable {
   pointer-events: none;
 }
 
 .hidden {
   display: none;
-}
-
-.board {
-  animation: appear 0.3s ease-in-out 1;
 }
 
 .menu {
@@ -67,35 +104,26 @@ html {
   display: flex;
 }
 
-.restart-btn {
+.score--restart-btn {
   color: var(--font-color);
   background-color: transparent;
   border: none;
   font-size: 3rem;
 }
 
-.restart-btn:hover {
+.score--restart-btn:hover {
   cursor: pointer;
 }
 
 .row {
   display: flex;
-}
-
-@keyframes appear {
-  0% {
-    transform: scale(0.2);
-  }
-
-  100% {
-    transform: scale(1);
-  }
+  width: 100%;
+  height: 100%;
 }
 
 .icon {
   font-size: 10rem;
   color: var(--font-color);
-  animation: appear ease-in-out 0.2s 1;
 }
 
 .fa-times {
@@ -104,27 +132,21 @@ html {
 
 .game-btn {
   position: relative;
-  width: 17rem;
-  height: 17rem;
+  width: 100%;
+  height: 100%;
   background-color: transparent;
-  border: none;
+  border: var(--border);
   outline: none;
 }
 
-.row:nth-child(1) {
-  border: 3px solid var(--font-color);
-}
-
-.row:nth-child(2),
-.row:nth-child(3) {
-  border-bottom: 3px solid var(--font-color);
-  border-left: 3px solid var(--font-color);
-  border-right: 3px solid var(--font-color);
+.row--1 *,
+.row--2 * {
+  border-bottom: none;
 }
 
 .game-btn--1,
 .game-btn--2 {
-  border-right: 3px solid var(--font-color);
+  border-right: none;
 }
 
 .game-btn::before {

@@ -31,4 +31,22 @@ export class DOMHelpers {
 
     return element;
   };
+
+  protected removeNodesContent = (
+    selector: string,
+    classToRemove?: string
+  ): void => {
+    const elements = this.getAllElements(selector);
+    const elementsArr = [...elements];
+    elementsArr.forEach((element: Node): void => {
+      let htmlElement = <HTMLElement>element;
+      htmlElement.innerHTML = '';
+      if (classToRemove) htmlElement.classList.remove(classToRemove);
+    });
+  };
+
+  protected removeElement = (selector: string): void => {
+    const elementToRemove = this.getElement(selector);
+    elementToRemove.remove();
+  };
 }

@@ -48,8 +48,6 @@ export class Menu extends DOMHelpers {
 
     this.circleBtn = this.getElement('.circle-btn');
     this.crossBtn = this.getElement('.cross-btn');
-    // this.circleBtn = <Element>document.querySelector('.circle-btn');
-    // this.crossBtn = <Element>document.querySelector('.cross-btn');
 
     this.circleBtn.addEventListener('click', this.onButtonClick);
     this.crossBtn.addEventListener('click', this.onButtonClick);
