@@ -12,11 +12,6 @@
 }
 
 html {
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%; */
   font-size: 62.5%;
   font-family: monospace;
   color: var(--font-color);
@@ -30,15 +25,6 @@ body {
   justify-content: center;
   align-items: center;
   margin: 0;
-  /* height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
-  /* font-size: 62.5%;
-  font-family: monospace;
-  color: var(--font-color);
-  background-color: var(--bg-color); */
 }
 
 #root {
@@ -108,7 +94,6 @@ body {
   text-align: center;
   padding: 5rem;
   border-radius: 0.8rem;
-  /* border: 1px solid var(--font-color); */
 }
 
 .menu--btn {
