@@ -6,6 +6,11 @@ import { Animations } from './Animations';
 
 const app = <HTMLElement>document.getElementById('root');
 
-const game = new Game(new CasualBoard(app), new Score(app), new Animations());
-const menu = new Menu(app, game);
-menu.show();
+const game = new Game(
+  new Menu(app),
+  new CasualBoard(app),
+  new Score(app),
+  new Animations()
+);
+
+game.showStartMenu();

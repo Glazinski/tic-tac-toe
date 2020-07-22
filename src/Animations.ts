@@ -12,6 +12,18 @@ export class Animations extends DOMHelpers {
     this.boardElement = this.createElement('div');
   }
 
+  printAnimatedMessage = (msg: string): void => {
+    const msgElement = this.createElement('div', 'message');
+    msgElement.innerHTML = msg;
+    document.body.insertAdjacentElement('afterbegin', msgElement);
+
+    gsap.from(msgElement, 1, { translateY: 20 });
+
+    setTimeout(() => {
+      msgElement.remove();
+    }, 1000);
+  };
+
   animateLine = (
     selector: string,
     basedSelector: string,
@@ -32,7 +44,7 @@ export class Animations extends DOMHelpers {
     if (direction === Directions.Horizontal) {
       gsap.set(this.stripe, {
         x: basedX,
-        y: basedY + basedHeight / 2 - 8,
+        y: basedY + basedHeight / 2 - 6,
         width: width,
         rotate: 0,
         transformOrigin: 'left center',
@@ -40,7 +52,7 @@ export class Animations extends DOMHelpers {
     } else if (direction === Directions.Vertical) {
       gsap.set(this.stripe, {
         x: basedX + basedWidth / 2,
-        y: basedY - 8,
+        y: basedY - 6,
         width: width,
         rotate: 90,
         transformOrigin: 'left center',
@@ -48,7 +60,7 @@ export class Animations extends DOMHelpers {
     } else if (direction === Directions.LeftDiagonal) {
       gsap.set(this.stripe, {
         x: basedX,
-        y: basedY - 8,
+        y: basedY - 6,
         width: diagonalWidth,
         transformOrigin: 'left center',
         rotate: 45,
@@ -56,7 +68,7 @@ export class Animations extends DOMHelpers {
     } else if (direction === Directions.RightDiagonal) {
       gsap.set(this.stripe, {
         x: basedX - (diagonalWidth - basedWidth),
-        y: basedY - 8,
+        y: basedY - 6,
         width: diagonalWidth,
         transformOrigin: 'right center',
         rotate: -45,

@@ -15,6 +15,7 @@ export class Game extends DOMHelpers {
   private currentPlayer: string;
 
   constructor(
+    private menu: Menu,
     private board: Board,
     private score: Score,
     private animations: Animations
@@ -38,19 +39,20 @@ export class Game extends DOMHelpers {
 
   private isGameWon = (row: number, col: number): boolean => {
     // Horizontal win
+    let isWin = false;
+
     const boardSelector = '.board';
     if (
       this.gameBoard[row][0] === this.currentPlayer &&
       this.gameBoard[row][1] === this.currentPlayer &&
       this.gameBoard[row][2] === this.currentPlayer
     ) {
-      console.log('Horizontal win', row);
       this.animations.animateLine(
         boardSelector,
         `.row--${row + 1}`,
         Directions.Horizontal
       );
-      return true;
+      isWin = true;
     }
     // Vertical win
     else if (
@@ -58,13 +60,13 @@ export class Game extends DOMHelpers {
       this.gameBoard[1][col] === this.currentPlayer &&
       this.gameBoard[2][col] === this.currentPlayer
     ) {
-      console.log('Verticacl win', col);
       this.animations.animateLine(
         boardSelector,
         `.game-btn--${col + 1}`,
         Directions.Vertical
       );
-      return true;
+      isWin = true;
+      // return true;
     }
     // Diagonal win left bottom corner to right upper corner
     else if (
@@ -72,13 +74,13 @@ export class Game extends DOMHelpers {
       this.gameBoard[1][1] === this.currentPlayer &&
       this.gameBoard[2][2] === this.currentPlayer
     ) {
-      console.log('Diagonal win left upper corner to right bottom corner');
       this.animations.animateLine(
         boardSelector,
         boardSelector,
         Directions.LeftDiagonal
       );
-      return true;
+      isWin = true;
+      // return true;
     }
     // Diagonal win left upper corner to right bottom corner
     else if (
@@ -86,14 +88,25 @@ export class Game extends DOMHelpers {
       this.gameBoard[1][1] === this.currentPlayer &&
       this.gameBoard[0][2] === this.currentPlayer
     ) {
-      console.log('Diagonal win left bottom corner to right upper corner');
       this.animations.animateLine(
         boardSelector,
         boardSelector,
         Directions.RightDiagonal
       );
+      isWin = true;
+      // return true;
+    } else if (this.isDraw()) {
+      // this.printMessage('Draw');
+      this.animations.printAnimatedMessage('Draw');
+      setTimeout(() => {
+        this.startNextRound();
+      }, 1000);
+    }
+    if (isWin) {
+      this.board.rootElement.style.pointerEvents = 'none';
       return true;
     }
+
     return false;
   };
 
@@ -111,6 +124,7 @@ export class Game extends DOMHelpers {
 
   private startNextRound = (): void => {
     this.board.clearBoard();
+    this.board.rootElement.style.pointerEvents = 'auto';
   };
 
   onCellButtonClick = (event: Event): void => {
@@ -129,7 +143,6 @@ export class Game extends DOMHelpers {
       setTimeout(() => {
         this.startNextRound();
       }, 1000);
-      console.log(this.currentPlayer);
     } else {
       this.switchPlayer();
     }
@@ -142,20 +155,40 @@ export class Game extends DOMHelpers {
     };
   };
 
-  onResetButtonClick = (event: Event): void => {
+  onResetButtonClick = (): void => {
     this.score.clearTableScore();
     this.board.clearBoard();
     this.resetScores();
     this.removeElement('.board');
     this.removeElement('.score');
+    this.showStartMenu();
+  };
+
+  onStartButtonClick = (currentPlayer: string): void => {
+    this.menu.hide();
+    this.startGame(currentPlayer);
+  };
+
+  showStartMenu = (): void => {
+    this.menu.show(this.onStartButtonClick);
+  };
+
+  isDraw = (): boolean => {
+    const { length } = this.gameBoard;
+
+    for (let i = 0; i < length; i++) {
+      for (let j = 0; j < length; j++) {
+        if (this.gameBoard[i][j].length === 0) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   };
 
   startGame = (currPlayer: string): void => {
     this.currentPlayer = currPlayer;
-    // TODO: DELETE IT LATER
-    window.addEventListener('click', () => {
-      console.log(this);
-    });
     // I pass reference to onButtonClick function
     // so it can be attach as event listener to each cell
     this.board.generateBoard(this.onCellButtonClick);

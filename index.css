@@ -50,13 +50,19 @@ body {
   margin-bottom: 10rem;
 }
 
+.board-container::after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+
 .board {
   position: relative;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  width: 430px;
-  height: 430px;
+  height: 40vh;
+  width: 40vh;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
@@ -64,12 +70,16 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: red;
-  height: 16px;
+  background-color: #b3ab96;
+  height: 12px;
   width: 400px;
   z-index: 10;
-  opacity: 0.5;
   border-radius: 50px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.start-title {
+  font-size: 4rem;
 }
 
 .unclickable {
@@ -80,11 +90,25 @@ body {
   display: none;
 }
 
+.message {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5rem;
+  text-transform: uppercase;
+  z-index: 11;
+  border: 1px solid var(--font-color);
+  padding: 1rem 2rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  background-color: rgb(56, 56, 56);
+}
+
 .menu {
   text-align: center;
   padding: 5rem;
   border-radius: 0.8rem;
-  border: 1px solid var(--font-color);
+  /* border: 1px solid var(--font-color); */
 }
 
 .menu--btn {
@@ -102,17 +126,32 @@ body {
   font-size: 4rem;
   margin-top: 8rem;
   display: flex;
+  flex-direction: column;
 }
 
-.score--restart-btn {
+.score__players {
+  display: flex;
+  justify-content: space-between;
+}
+
+.score__player {
+  display: flex;
+}
+
+.score__restart-btn {
   color: var(--font-color);
   background-color: transparent;
   border: none;
-  font-size: 3rem;
+  font-size: 2rem;
+  margin-top: 2rem;
 }
 
 .score--restart-btn:hover {
   cursor: pointer;
+}
+
+.player-icon .icon {
+  font-size: 4rem;
 }
 
 .row {
@@ -168,4 +207,10 @@ body {
 
 .game-btn:hover::before {
   opacity: 0.3;
+}
+
+@media screen and (max-width: 500px) {
+  .icon {
+    font-size: 6rem;
+  }
 }
